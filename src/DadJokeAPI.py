@@ -44,7 +44,14 @@ class DadJokeAPI:
     return joke
 
   def __str__(self):
-      return self.api_url
+    '''
+    Returns the url of the api used.
+    args:
+      None
+    return:
+      self.api_url: (str) url of api used
+    '''
+    return self.api_url
     
     
     

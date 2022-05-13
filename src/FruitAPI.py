@@ -45,4 +45,14 @@ class FruitAPI:
       fruit = fruitsjson[fruit_index]['name']
       fruits_list.append(fruit)
     return fruits_list
+
+  def __str__(self):
+    '''
+    Returns the url of the api used.
+    args:
+      None
+    return:
+      self.api_url: (str) url of api used
+    '''
+    return self.api_url
     
