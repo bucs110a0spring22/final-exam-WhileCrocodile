@@ -58,6 +58,8 @@ def animal_duel(rounds=5):
     rounds: (int) number of rounds to simulate
   return:
     fight_log = (string) record of simulated rounds
+    winner = (string) animal that won the most rounds
+    fight_log, winner = (tuple) a tuple of the previous 2 strings
   '''
   animalapi = ZooAnimalAPI.ZooAnimalAPI()
   battle_descriptors = open("etc/battle_descriptors.txt", "r")
@@ -68,15 +70,27 @@ def animal_duel(rounds=5):
   animal_one = animaljson[0]
   animal_two = animaljson[1]
 
+  one_score = 0
+  two_score = 0
+
   fight_log = ""
   for i in range(rounds):
     descriptor = random.choice(descriptors_list)
     if random.randrange(2):
       fight_log += f"{animal_one} {descriptor} {animal_two}!\n"
+      one_score += 1
     else:
       fight_log += f"{animal_two} {descriptor} {animal_one}!\n"
+      two_score += 1
 
-  return fight_log
+  if one_score == two_score:
+    winner = "Tie"
+  elif one_score > two_score:
+    winner = animal_one
+  else:
+    winner = animal_two
+  
+  return fight_log, winner
 
 def animal_fruit(fruits=1):
     '''
@@ -127,7 +141,9 @@ def main():
     while not numduels.isnumeric():
       numduels = input("Invalid input. How many fights would you like to simulate?\n")
     numduels = int(numduels)
-    print(animal_duel(rounds=numduels))
+    duel, winner = animal_duel(rounds=numduels)
+    print(duel)
+    print(f"Winner: {winner}\n")
   
     ##### Fruit Response Generator #####
     print("/ / / / / Fruit Response Generator / / / / /")
