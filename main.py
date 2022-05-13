@@ -149,7 +149,7 @@ def main():
     print("/ / / / / Fruit Response Generator / / / / /")
     numfruit = input("How many fruits would you like the animal to consider?\n")
     while not numfruit.isnumeric():
-      input("Invalid input. How many fruit would you like the animal to consider?\n")
+      numfruit = input("Invalid input. How many fruit would you like the animal to consider?\n")
     numfruit = int(numfruit)
     print(animal_fruit(numfruit))
   
