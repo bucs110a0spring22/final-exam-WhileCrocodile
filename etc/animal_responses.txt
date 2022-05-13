@@ -1,1 +1,1 @@
-["likes", "dislikes", "turns their nose up at", "recoils at", "happily eats", "is confused by", "is disgusted by", "doesn't notice", "gobbles up", "conflictedly consumes"]
+["likes", "dislikes", "turns their nose up at", "recoils at", "happily eats", "is confused by", "is disgusted by", "doesn't notice", "gobbles up", "conflictedly consumes", "devours", "dines on", "nibbles at", "noshes on", "snacks on", "wolfs down", "partakes in", "is offended by", "is repulsed by", "is terrified of", "insults", "is grossed out by"]

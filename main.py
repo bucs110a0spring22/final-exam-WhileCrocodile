@@ -139,7 +139,7 @@ def main():
     print("/ / / / / Duel Generator / / / / /")
     numduels = input("How many duels would you like to simulate?\n")
     while not numduels.isnumeric():
-      numduels = input("Invalid input. How many fights would you like to simulate?\n")
+      numduels = input("Invalid input. How many duels would you like to simulate?\n")
     numduels = int(numduels)
     duel, winner = animal_duel(rounds=numduels)
     print(duel)
