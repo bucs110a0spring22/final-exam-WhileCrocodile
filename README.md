@@ -23,7 +23,7 @@ Allows you to make random animals do various things. Currently, this list includ
 * Telling dad jokes
 * Simulating large battles
 * Simulating one-on-one duels
-* Expressions opinions on fruits
+* Expressing opinions on fruits
 
 Most Challenging topic in the course:
 
