@@ -1,6 +1,8 @@
-import DadJokeAPI
-import ZooAnimalAPI
+import src.DadJokeAPI as DadJokeAPI
+import src.ZooAnimalAPI as ZooAnimalAPI
+import src.FruitAPI as FruitAPI
 import random
+import json
 
 def animal_joke(jokecount=1):
   '''
@@ -8,7 +10,7 @@ def animal_joke(jokecount=1):
   args:
     jokecount: (int) number of jokes to tell
   return:
-    None
+    animaljoke: (str) jokes made by animals
   '''
   jokeapi = DadJokeAPI.DadJokeAPI()
   animalapi = ZooAnimalAPI.ZooAnimalAPI()
@@ -17,58 +19,124 @@ def animal_joke(jokecount=1):
   # for speed and less resource utilization
   # dad jokes still have to be requested multiple times
   animaljoke = ""
-  animaljson = animalapi.get(jokecount)
+  animallist = animalapi.get_animals(jokecount)
   for count in range(jokecount):
-    animal = animaljson[count]["name"]
-    jokejson = jokeapi.get()
-    joke = jokejson["joke"]
+    animal = animallist[count]
+    joke = jokeapi.get_joke()
     animaljoke += f"\n{animal} says:\n{joke}\n"
   return animaljoke
 
 def animal_battle(fights=1):
   '''
-  Determines who would win a fight between two animals.
+  Simulates many fights between many different animals.
   args:
-    None
+    fights: (int) number of fights to simulate
   return:
-    fight_log: (string) Record of animal wins/losses
+    fight_log: (string) record of simulated battles
   '''
   animalapi = ZooAnimalAPI.ZooAnimalAPI()
-
+  battle_descriptors = open("etc/battle_descriptors.txt", "r")
+  descriptors_list = json.load(battle_descriptors)
+  
   fight_log = ""
   for i in range(fights):
-    animaljson = animalapi.get(2)
-    animal_one = animaljson[0]["name"]
-    animal_two = animaljson[1]["name"]
+    descriptor = random.choice(descriptors_list)
+    animaljson = animalapi.get_animals(2)
+    animal_one = animaljson[0]
+    animal_two = animaljson[1]
     if random.randrange(2):
-      fight_log += f"{animal_one} won against {animal_two}!\n"
+      fight_log += f"{animal_one} {descriptor} {animal_two}!\n"
     else:
-      fight_log += f"{animal_one} lost to {animal_two}!\n"
-  
+      fight_log += f"{animal_one} was {descriptor} by {animal_two}!\n"
+    
   return fight_log
 
-def main():
-  ##### Joke Generator #####
-  
-  numjokes = input("How many jokes would you like (min 1, max 10)?\n")
-  # checks if numjokes is a number; if it is, converts
-  # it into an int, then checks if it's between 0 and 10
-  while not numjokes.isnumeric() or (int(numjokes) not in range(0, 11)):
-    numjokes = input("Invalid input. How many jokes would you like (min 1, max 10)?\n")
-  numjokes = int(numjokes)
-  joke = animal_joke(jokecount=numjokes)
-  print(joke)
-  
-  ##### Joke Generator #####
+def animal_duel(rounds=5):
+  '''
+  Simulates many rounds of fighting between 2 animals.
+  args:
+    rounds: (int) number of rounds to simulate
+  return:
+    fight_log = (string) record of simulated rounds
+  '''
+  animalapi = ZooAnimalAPI.ZooAnimalAPI()
+  battle_descriptors = open("etc/battle_descriptors.txt", "r")
+  descriptors_list = json.load(battle_descriptors)
+  battle_descriptors.close()
 
-  ##### Fight Generator #####
-  numfights = input("How many fights would you like to simulate?\n")
-  while not numfights.isnumeric():
-    numfights = input("Invalid input. How many fights would you like to simulate?\n")
-  numfights = int(numfights)
-  print(animal_battle(fights=numfights))
-  ##### Fight Generator #####
+  animaljson = animalapi.get_animals(2)
+  animal_one = animaljson[0]
+  animal_two = animaljson[1]
+
+  fight_log = ""
+  for i in range(rounds):
+    descriptor = random.choice(descriptors_list)
+    if random.randrange(2):
+      fight_log += f"{animal_one} {descriptor} {animal_two}!\n"
+    else:
+      fight_log += f"{animal_two} {descriptor} {animal_one}!\n"
+
+  return fight_log
+
+def animal_fruit(fruits=1):
+    '''
+    Determines if an animal would like a number of fruits.
+    args:
+      fruits: (int) number of fruits to consider
+    return:
+      animal_response: (str) animal responses to fruit
+    '''
+    animalapi = ZooAnimalAPI.ZooAnimalAPI()
+    fruitapi = FruitAPI.FruitAPI()
+    animal = animalapi.get_animal()
+    fruits_list = fruitapi.fruits_list(fruits)
+    animal_responses = open("etc/animal_responses.txt", "r")
+    responses_list = json.load(animal_responses)
+    animal_responses.close()
+    animal_response = ""
+    
+    for fruit in fruits_list:
+      response = random.choice(responses_list)
+      animal_response += f"{animal} {response} {fruit}!\n"
+
+    return animal_response
+
+def main():
+    ##### Joke Generator #####
+    print("/ / / / / Joke Generator / / / / /")
+    numjokes = input("How many jokes would you like (min 1, max 10)?\n")
+    # checks if numjokes is a number; if it is, converts
+    # it into an int, then checks if it's between 0 and 10
+    while not numjokes.isnumeric() or (int(numjokes) not in range(0, 11)):
+      numjokes = input("Invalid input. How many jokes would you like (min 1, max 10)?\n")
+    numjokes = int(numjokes)
+    joke = animal_joke(jokecount=numjokes)
+    print(joke)
+  
+    ##### Battle Generator #####
+    print("/ / / / / Battle Generator / / / / /")
+    numfights = input("How many fights would you like to simulate?\n")
+    while not numfights.isnumeric():
+      numfights = input("Invalid input. How many fights would you like to simulate?\n")
+    numfights = int(numfights)
+    print(animal_battle(fights=numfights))
+
+    ##### Duel Generator #####
+    print("/ / / / / Duel Generator / / / / /")
+    numduels = input("How many duels would you like to simulate?\n")
+    while not numduels.isnumeric():
+      numduels = input("Invalid input. How many fights would you like to simulate?\n")
+    numduels = int(numduels)
+    print(animal_duel(rounds=numduels))
+  
+    ##### Fruit Response Generator #####
+    print("/ / / / / Fruit Response Generator / / / / /")
+    numfruit = input("How many fruits would you like the animal to consider?\n")
+    while not numfruit.isnumeric():
+      input("Invalid input. How many fruit would you like the animal to consider?\n")
+    numfruit = int(numfruit)
+    print(animal_fruit(numfruit))
   
 
 if __name__ == "__main__":
-  main()
+    main()

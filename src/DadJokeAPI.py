@@ -30,11 +30,21 @@ class DadJokeAPI:
       
     request = requests.get(url, headers=headers)
     jokejson = request.json()
-    
+  
     return jokejson
 
+  def get_joke(self, id=None):
+    '''
+    Gets a single dad joke in plaintext. Gets a specific dad joke if an ID
+    is specified.
+    '''
+    jokejson = self.get(id)
+    joke = jokejson['joke']
+  
+    return joke
+
   def __str__(self):
-    return self.api_url
+      return self.api_url
     
     
     

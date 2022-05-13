@@ -15,10 +15,15 @@ Please list the urls for the APIs you used:
 
 * Dad Joke API: https://icanhazdadjoke.com/api
 * Zoo Animal API: https://zoo-animal-api.herokuapp.com/
+* Fruit API:
+* https://www.fruityvice.com/
 
 Summary of Program:
 
-Allows you to make random animals do various things, such as tell you dad jokes, simulate fights, and more.
+Allows you to make random animals do various things. Currently, this list includes:
+* Telling dad jokes
+* Simulating fights
+* Choosing favorite fruits
 
 Most Challenging topic in the course:
 
